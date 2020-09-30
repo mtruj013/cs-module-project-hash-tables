@@ -109,10 +109,26 @@ class HashTable:
         Implement this.
         """
         # Your code here
+
+        # node = HashTableEntry(key, value)
+
+        # Find the index
         index = self.hash_index(key)
+        # Search the list at that index for the key
+        current = self.buckets[index]
+        # self.buckets[index] = node
 
-        self.buckets[index] = HashTableEntry(key, value)
-
+        # print(self.buckets[index])
+        while current != None and current.key != key:
+            current = current.next
+        # If found, update the value
+        if current != None:
+            current.value = value
+        # If not found, make a new entry and insert it at the head of the list.]
+        else:
+            new_entry = HashTableEntry(key, value)
+            new_entry.next = self.buckets[index]
+            self.buckets[index] = new_entry
 
     def delete(self, key):
         """
@@ -123,11 +139,66 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # get the index for the key
+      
+        # search the linked list for the key at that index
+            # if found, delete it, return it
+        # else return None
+
+        
+        # while head:
+        #     if head.key == key:
+        #         prev.next = cur.next
+        #         cur.next = None
+        #         return cur
+        #     prev = prev.next
+        #     cur = cur.next
+        # return None
+
+    # get the index for the key
+    # search the linked list for the key at that index
+    # if found, delete it, return it
+    # else return None
+
         index = self.hash_index(key)
-        if self.buckets[index]:
-            self.buckets[index] = None
+        head = self.buckets[index]
+        prev = None
+
+        # if theres nothing
+
+        while head is not None and head.key != key:
+            prev = head
+            head = prev.next
+        
+        if head is None:
+            return None
         else:
-            print("Could not find key!" )   
+            if prev is None:
+                self.buckets[index] = head.next
+            else:
+                prev.next = head.next
+                
+
+        # if there's only 1 thing
+        # if head.key == key:
+        #     old_head = head
+        #     head = head.next
+        #     old_head.next = None
+        #     return old_head
+        
+        # # general case
+        # prev = head
+        # cur = head.next
+
+        # while cur:
+        #     if cur.key == key:
+        #         prev.next = cur.next
+        #         cur.next = None
+        #         return cur
+
+        #     prev = prev.next
+        #     cur = cur.next
+        # return None 
 
 
     def get(self, key):
@@ -139,14 +210,24 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        
-        index = self.hash_index(key)
-        
-        if self.buckets[index]:
-            return self.buckets[index].value
-        else:
-            print("Could not find key!" )   
 
+        # get the index for the key
+        index = self.hash_index(key)
+        # search the linked list at that index for the key
+        current = self.buckets[index]
+        while current:
+            # if found, return the value
+            if current.key == key:
+                return current.value
+            current = current.next
+        return current
+
+
+        # index = self.hash_index(key)
+        # if self.buckets[index]:
+        #     return self.buckets[index].value
+        # else:
+        #     return None
 
 
 
